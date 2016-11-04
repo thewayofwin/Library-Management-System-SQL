@@ -1,0 +1,35 @@
+form{
+	width: auto;	
+
+}
+#fieldSearch{
+	width: 30%;
+	text-align: center;
+	display: inline;
+}
+#fieldBorrower{
+	width: 30%;
+	text-align: center;
+	display: inline;
+}
+
+#fieldReturn{
+	width: 30%;
+	text-align: center;
+	display: inline;
+}
+
+
+h1{
+	text-align: center;
+}
+div{
+	text-align: center;
+	margin-top: 2%;
+}
+
+html{
+	background: url("http://www.planwallpaper.com/static/images/Alien_Ink_2560X1600_Abstract_Background_1.jpg") no-repeat center center fixed;
+	background-size:cover;
+}
+

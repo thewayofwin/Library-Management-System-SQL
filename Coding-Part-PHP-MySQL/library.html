@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="keywords" content="Song Tao library system, Tao Song library system, Song Tao UTD, Tao Song UTD">
+<meta name="description" content="Song Tao's library system, Version 1.0">
+<meta name="author" content="Song Tao">
+
+<link rel="stylesheet" type="text/css" href="index.css">
+
+<link rel="icon" type="image/png" href="https://scontent-dfw1-1.xx.fbcdn.net/hphotos-xlf1/v/t1.0-9/11990477_1468813903425580_3905209976869560949_n.jpg?oh=135155d38333671980855e535bc2e7be&amp;oe=56A88206" >
+<title>Welcome to Library</title>
+
+</head>
+
+<body>
+
+<h1>Welcome!</h1>
+<hr>
+<div id="searchbook">
+<form id="Search" action="Search.php" method="post">
+  <fieldset id="fieldSearch">
+    <legend>Search Book</legend>
+    ISBN<br>
+    <input type="text" name="ISBN10"  value="" placeholder="10 Digits ISBN Number">
+    <br>
+    Title<br>
+    <input type="text" name="Title" value="" placeholder="Book Title">
+    <br>
+    Author<br>
+    <input type="text" name="Author" value="" placeholder="Book Author">
+    <br>    
+    <input type="submit"  form ="Search" formtarget="_blank" value="Submit">
+  </fieldset>
+</form>
+</div>
+
+
+<div id="borrowerinfo">
+<form id="borrower" action="Borrower.php" method="post">
+  <fieldset id="fieldBorrower">
+    <legend>Borrower Information: Create a New Card</legend>
+            Firstname<br>
+           <input type="text" name="Fname"  placeholder="First Name" id="Fname" required><br>
+            Lastname<br>
+            <input type="text" name="Lname" value="" placeholder="Last name" id="Lname" required><br>
+            Address<br>
+            <input type="text" name="Address" value="" placeholder="Address" required><br>
+            Phone<br>
+            <input type="text" name="Phone" value="" placeholder="Phone Number"><br>       
+    <button type="submit" form="borrower" formtarget="_blank" value="Submit">Submit</button>
+    <button type="reset" value="Reset">Reset</button>
+  </fieldset>
+</form>
+</div>
+
+<div id="return">
+  <fieldset id="fieldReturn">
+    <legend>Return Book</legend>
+   <form id="checkIn1" action="CheckIn1.php" method="post">
+    ISBN<br>
+    <input type="text" name="rISBN10"  value="" placeholder="10 Digits ISBN Number" >
+    <br>
+    Card Number<br>
+    <input type="text" name="Card_no" value="" placeholder="Card Number" >
+    <br>
+    <button type="submit" form="checkIn1" formtarget="_blank" value="Submit">Submit book_ID or CardNumber</button>
+   </form><br>
+    <b>OR</b>
+    <br>
+    <br>
+    <form id="checkIn2" action="CheckIn2.php" method="post">
+        Borrower First Name<br>
+        <input type="text" name="BorrowerFirstName" value="" placeholder="Fitstname" >
+        <br>
+        Borrower Last Name<br>
+        <input type="text" name="BorrowerLastName" value="" placeholder="Lastname" >
+        <br>       
+        <button type="submit" form="checkIn2" formtarget="_blank" value="Submit">Submit name</button>
+    </form><br>
+  </fieldset>
+
+</div>
+
+
+
+
+<div><a href="Fine.html" target="_blank">Fine Management Enter</a></div>
+
+
+
+</body>
+</html>
