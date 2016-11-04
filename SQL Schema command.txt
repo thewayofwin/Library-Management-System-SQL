@@ -1,0 +1,76 @@
+CREATE TABLE `book` (
+  `Book_id` varchar(10) NOT NULL,
+  `Title` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`Book_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `book_authors` (
+  `Book_id` varchar(10) NOT NULL,
+  `Author_Name` varchar(100) NOT NULL,
+  PRIMARY KEY (`Book_id`,`Author_Name`),
+  KEY `Book_id_authors` (`Book_id`),
+  CONSTRAINT `Book_id_authors` FOREIGN KEY (`Book_id`) REFERENCES `book` (`Book_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `library_branch` (
+  `Branch_id` int(11) NOT NULL,
+  `Branch_name` varchar(40) DEFAULT NULL,
+  `Address` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`Branch_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `book_copies` (
+  `Book_id` varchar(10) NOT NULL,
+  `Branch_id` int(11) NOT NULL,
+  `No_of_copies` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Book_id`,`Branch_id`),
+  KEY `branch_id1_idx` (`Branch_id`),
+  CONSTRAINT `book_id1` FOREIGN KEY (`Book_id`) REFERENCES `book` (`Book_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `branch_id1` FOREIGN KEY (`Branch_id`) REFERENCES `library_branch` (`Branch_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `borrower` (
+  `Card_no` int(11) NOT NULL AUTO_INCREMENT,
+  `Fname` varchar(45) NOT NULL,
+  `Lname` varchar(45) NOT NULL,
+  `Address` varchar(100) NOT NULL,
+  `Phone` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`Card_no`),
+  UNIQUE KEY `name` (`Fname`,`Lname`,`Address`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `book_loans` (
+  `Book_id` varchar(10) NOT NULL,
+  `Branch_id` int(11) NOT NULL,
+  `Card_no` int(11) NOT NULL,
+  `Date_out` date NOT NULL,
+  `Due_date` date NOT NULL,
+  `Date_in` date DEFAULT NULL,
+  `Loan_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`Loan_id`),
+  KEY `loanReferBook_idx` (`Book_id`),
+  KEY `loanReferBranch_idx` (`Branch_id`),
+  KEY `loanReferBorrower_idx` (`Card_no`),
+  CONSTRAINT `loanReferBook` FOREIGN KEY (`Book_id`) REFERENCES `book` (`Book_id`) ON UPDATE CASCADE,
+  CONSTRAINT `loanReferBorrower` FOREIGN KEY (`Card_no`) REFERENCES `borrower` (`Card_no`) ON UPDATE CASCADE,
+  CONSTRAINT `loanReferBranch` FOREIGN KEY (`Branch_id`) REFERENCES `library_branch` (`Branch_id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+CREATE TABLE `fines` (
+  `Loan_id` int(11) NOT NULL,
+  `Fine_amt` decimal(11,2) DEFAULT '0.00',
+  `Paid` int(1) DEFAULT '0',
+  PRIMARY KEY (`Loan_id`),
+  CONSTRAINT `bookloanstofines` FOREIGN KEY (`Loan_id`) REFERENCES `book_loans` (`Loan_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
