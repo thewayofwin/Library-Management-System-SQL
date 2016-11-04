@@ -1,0 +1,151 @@
+We need select useful data from csv, which is raw data.
+the CSV files are raw data. There is rarely a simple one-to-one mapping from raw data to a schema. Some raw data contains noise. Some raw data is superfluous. Some raw data may need to be reformatted or filtered prior to importing. Part of the assignment is developing a strategy to map the raw data onto the schema. Not all raw data will be needed and may be discarded (but you may choose to use it). 
+
+
+
+//Import data to book table
+//1st step
+
+LOAD DATA local infile 'E:\\UTD 2015 FALL\\CS 6360 Database Design\\SQL project\\Library csv file\\books3.csv'
+
+into table books 
+
+fields terminated by '\t' 
+
+enclosed by '"' 
+
+lines terminated by '\r\n' 
+
+ignore 1 rows;
+
+//2nd step
+insert into book(Book_id, Title)
+
+select ISBN10, Title
+
+from books;
+
+
+
+
+
+//Import data to book_authors table
+
+insert into book_authors(Book_id, Author_name)
+
+select ISBN10, Author
+
+from books;
+
+
+//Import data to book_copies table
+//1st step
+LOAD DATA local infile 'E:\\UTD 2015 FALL\\CS 6360 Database Design\\SQL project\\Library csv file\\book_copies.csv'
+
+into table book_copies_copy 
+
+fields terminated by '\t' 
+
+enclosed by '"' 
+
+lines terminated by '\r\n' 
+
+ignore 1 rows;
+
+//2nd step
+insert into book_copies(Book_id, Branch_id, No_of_copies)
+
+select bookId, branchId, copyNumber
+
+from book_copies_copy, book B
+
+where book_copies_copy.bookId = B.Book_id AND book_copies_copy.branchId = B.Branch_id ;
+
+
+
+
+//Import data to book_loans table
+//1st step
+ADD Loan_id, Book_id, Branch_id, Card_no, Date_out, Date_in in first row to book_loans.csv
+
+//2nd step
+LOAD DATA local infile 'E:\\UTD 2015 FALL\\CS 6360 Database Design\\SQL project\\Library csv file\\book_loans.csv'
+
+into table book_loans_copy
+
+fields terminated by '\t' 
+
+enclosed by '"' 
+
+lines terminated by '\r\n' 
+
+ignore 1 rows;
+
+//3rd step
+insert into book_loans(Book_id, Branch_id, Card_no, Date_out, Date_in, Loan_id)
+
+select Book_id, Branch_id, Card_no, Date_out, Date_in, Loan_id
+
+from book_loans_copy, book B
+
+where book_loans_copy.Book_id = B.Book_id AND book_loans_copy.Branch_id = B.Branch_id AND book_loans_copy.Loan_id = B.Loan_id;
+
+//4th step
+update book_loans
+set Date_in = NULL
+where Date_in = '0000-00-00';
+
+
+
+
+
+//Import data to borrower table
+//1st step
+
+change address, city, state to one column in borrowers.csv
+
+
+//2nd step
+LOAD DATA local infile 'E:\\UTD 2015 FALL\\CS 6360 Database Design\\SQL project\\Library csv file\\borrowers.csv'
+
+into table borrower_copy
+
+fields terminated by ',' 
+
+enclosed by '\t' 
+
+lines terminated by '\r\n' 
+
+
+//3rd step
+insert into borrower(Card_no, Fname, Lname, Address, Phone)
+
+select id, first_name, last_name, address, phone
+
+from borrower_copy;
+
+
+
+
+
+//Import data to library_branch table
+//1st step
+
+LOAD DATA local infile 'E:\\UTD 2015 FALL\\CS 6360 Database Design\\SQL project\\Library csv file\\library_branch.csv'
+
+into table library_branch_copy
+
+fields terminated by '\t' 
+
+enclosed by ',' 
+
+lines terminated by '\r\n' 
+
+//2nd step
+insert into library_branch(Branch_id, Branch_name, Address)
+
+select branch_id, branch_name, address
+
+from library_branch_copy;
+
+
